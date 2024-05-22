@@ -14,8 +14,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+else
+{
+    // Optionally, enable Swagger in non-development environments
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        c.RoutePrefix = string.Empty;
+    });
+}
+
+
 app.UseHttpsRedirection();
 
-
+app.MapGet("/", () => "Hello World!"); // Example endpoint
 
 app.Run();
