@@ -3,6 +3,7 @@ import './App.css';
 
 const App: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [resultImage, setResultImage] = useState<string | null>(null);
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
