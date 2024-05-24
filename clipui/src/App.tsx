@@ -12,6 +12,10 @@ const App: React.FC = () => {
     setFile(droppedFile);
   };
 
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(e.target.files[0]);
@@ -49,7 +53,8 @@ const App: React.FC = () => {
       <header className="App-header">
         <div 
           className="drop-zone" 
-          onDrop={handleDrop} 
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
         >
           <h1>rmbg</h1>
           <input 
