@@ -29,7 +29,7 @@ const App: React.FC = () => {
     formData.append('file', file);
 
     try {
-      const response = await fetch('https://localhost:5001/upload', {
+      const response = await fetch('https://localhost:7155/process-image', {
         method: 'POST',
         body: formData,
       });

@@ -7,6 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Clip",
+        builder => builder.WithOrigins("http://localhost:3000")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +37,8 @@ else
 
 
 app.UseHttpsRedirection();
+
+app.UseCors("Clip");
 
 // Set environment variable for pythonnet
 var pythonHome = @"C:\Users\Kevin\AppData\Local\Programs\Python\Python38";
