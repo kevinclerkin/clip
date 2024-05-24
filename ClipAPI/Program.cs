@@ -57,7 +57,7 @@ app.MapPost("/process-image", async (HttpContext context) =>
         }
 
         var form = await context.Request.ReadFormAsync();
-        var file = form.Files.GetFile("image");
+        var file = form.Files.GetFile("file");
 
         if (file == null)
         {
