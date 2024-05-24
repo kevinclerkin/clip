@@ -17,6 +17,31 @@ const App: React.FC = () => {
       setFile(e.target.files[0]);
     }
   };
+
+  const handleUpload = async () => {
+    if (!file) return;
+    
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('https://localhost:5001/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const imageBlob = await response.blob();
+        const imageUrl = URL.createObjectURL(imageBlob);
+        setResultImage(imageUrl);
+      } else {
+        console.error('Error processing image');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+
   
   
   return (
@@ -35,6 +60,9 @@ const App: React.FC = () => {
           />
           <button onClick={() => document.getElementById('fileInput')?.click()}>
             Select Image
+          </button>
+          <button onClick={handleUpload} disabled={!file}>
+            Upload and Process
           </button>
         </div>
       </header>
