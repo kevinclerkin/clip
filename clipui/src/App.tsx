@@ -65,9 +65,17 @@ const App: React.FC = () => {
             Upload and Process
           </button>
         </div>
+        {resultImage && (
+          <div className="result-box">
+            <h2>Processed Image</h2>
+            <a href={resultImage} download="processed_image.png">
+              <img src={resultImage} alt="Processed" />
+            </a>
+          </div>
+        )}
       </header>
     </div>
-    );
+  );
 }
 
 export default App;
