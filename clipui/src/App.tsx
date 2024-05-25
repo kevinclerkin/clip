@@ -72,7 +72,7 @@ const App: React.FC = () => {
         </div>
         {resultImage && (
           <div className="result-box">
-            <h2>Processed Image</h2>
+            <h2>Download Image</h2>
             <a href={resultImage} download="processed_image.png">
               <img src={resultImage} alt="Processed" />
             </a>
