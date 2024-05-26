@@ -51,12 +51,16 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
+      <div className="header-text">
+          <div className="line line1">Remove the background</div>
+          <div className="line line2">from any image</div>
+          <div className="line line3">with Clip</div>
+        </div>
         <div 
           className="drop-zone" 
           onDrop={handleDrop}
           onDragOver={handleDragOver}
         >
-          <h1>rmbg</h1>
           <input 
             type="file" 
             onChange={handleFileChange} 
@@ -64,10 +68,11 @@ const App: React.FC = () => {
             id="fileInput"
           />
           <button onClick={() => document.getElementById('fileInput')?.click()}>
-            Select Image
+            Select an Image
           </button>
+          <p>or drag and drop an image here</p>
           <button onClick={handleUpload} disabled={!file}>
-            Upload and Process
+            Clip the Image
           </button>
         </div>
         {resultImage && (
