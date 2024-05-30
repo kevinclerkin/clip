@@ -1,9 +1,12 @@
 import React, { useState, DragEvent, ChangeEvent } from 'react';
 import './App.css';
+import Spinner from './Components/Spinner/Spinner';
 
 const App: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [resultImage, setResultImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  
   
   
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
@@ -28,6 +31,9 @@ const App: React.FC = () => {
     const formData = new FormData();
     formData.append('file', file);
 
+    setLoading(true);
+   
+
     try {
       const response = await fetch('https://localhost:7155/process-image', {
         method: 'POST',
@@ -43,6 +49,8 @@ const App: React.FC = () => {
       }
     } catch (error) {
       console.error('Error uploading file:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,12 +85,13 @@ const App: React.FC = () => {
         </div>
         {resultImage && (
           <div className="result-box">
-            <h2>Download Image</h2>
+            <h2>Download image</h2>
             <a href={resultImage} download="processed_image.png">
               <img src={resultImage} alt="Processed" />
             </a>
           </div>
         )}
+        {loading && <Spinner />}
       </header>
     </div>
   );

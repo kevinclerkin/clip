@@ -56,6 +56,18 @@ body {
         transform: translateY(0);
     }
   }
+
+  .drop-zone-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
+  .center-drop-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   
   .drop-zone {
     border: 2px dashed black;
@@ -95,6 +107,11 @@ body {
 
   .drop-zone button:hover {
   background-color: #333;
+  }
+
+  .drop-zone button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
   }
   
   .result-box {

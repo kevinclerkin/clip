@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<Remover>();
 
 builder.Services.AddCors(options =>
 {
@@ -45,7 +46,7 @@ var pythonHome = @"C:\Users\Kevin\AppData\Local\Programs\Python\Python38";
 var pythonDll = Path.Combine(pythonHome, "python38.dll");
 Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pythonDll);
 
-// Define the endpoint for image processing
+// Endpoint for image processing
 app.MapPost("/process-image", async (HttpContext context) =>
 {
     try
@@ -64,18 +65,20 @@ app.MapPost("/process-image", async (HttpContext context) =>
             return Results.BadRequest("No image file provided");
         }
 
-        // Process the image using Rembg library
+        
         using (var inputImageStream = file.OpenReadStream())
         {
-            var remover = new Remover();
-            using (var resultStream = remover.RemoveBackground(inputImageStream))
-            {
-                var ms = new MemoryStream();
-                await resultStream.CopyToAsync(ms);
-                ms.Position = 0;
-                return Results.File(ms, "image/png");
-            }
+             var remover = new Remover();
+             using (var resultStream = remover.RemoveBackground(inputImageStream))
+             {
+                 var ms = new MemoryStream();
+                 await resultStream.CopyToAsync(ms);
+                 ms.Position = 0;
+                 return Results.File(ms, "image/png");
+                 
+             }
         }
+        
     }
     catch (Exception ex)
     {
@@ -84,5 +87,6 @@ app.MapPost("/process-image", async (HttpContext context) =>
 })
 
 .WithName("ProcessImage");
+
 
 app.Run();
