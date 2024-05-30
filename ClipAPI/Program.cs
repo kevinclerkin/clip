@@ -41,10 +41,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("Clip");
 
-// Set environment variable for pythonnet
-var pythonHome = @"C:\Users\Kevin\AppData\Local\Programs\Python\Python38";
-var pythonDll = Path.Combine(pythonHome, "python38.dll");
-Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pythonDll);
+
 
 // Endpoint for image processing
 app.MapPost("/process-image", async (HttpContext context) =>
