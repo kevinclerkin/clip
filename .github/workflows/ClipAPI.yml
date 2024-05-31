@@ -26,11 +26,11 @@ jobs:
         python-version: 3.8
 
     # Set Python DLL path and PYTHONHOME (non-Windows)
-    - name: Set Python DLL path and PYTHONHOME
-      if: ${{ matrix.os.category != 'windows' }}
-      run: |
-        echo PYTHONNET_PYDLL=$(python -m find_libpython) >> $GITHUB_ENV
-        echo PYTHONHOME=$(python -c 'import sys; print(sys.prefix)') >> $GITHUB_ENV
+    #- name: Set Python DLL path and PYTHONHOME
+      #if: ${{ matrix.os.category != 'windows' }}
+      #run: |
+        #echo PYTHONNET_PYDLL=$(python -m find_libpython) >> $GITHUB_ENV
+        #echo PYTHONHOME=$(python -c 'import sys; print(sys.prefix)') >> $GITHUB_ENV
 
     # Setup .NET SDK
     - name: Setup .NET SDK
