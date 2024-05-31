@@ -29,12 +29,22 @@ jobs:
       run: |
         python -c "import struct; print('Python is', struct.calcsize('P') * 8, 'bit')"
 
-    # Set Python DLL path and PYTHONHOME (non-Windows)
-    #- name: Set Python DLL path and PYTHONHOME
-      #if: ${{ matrix.os.category != 'windows' }}
-      #run: |
-        #echo PYTHONNET_PYDLL=$(python -m find_libpython) >> $GITHUB_ENV
-        #echo PYTHONHOME=$(python -c 'import sys; print(sys.prefix)') >> $GITHUB_ENV
+    # Set Python DLL path and PYTHONHOME (non Windows)
+    - name: Set Python DLL path and PYTHONHOME
+      run: |
+        echo "PYTHONNET_PYDLL=$(python3 -c 'import sys; print(sys.prefix)')/lib/libpython3.8.so" >> $GITHUB_ENV
+        echo "PYTHONHOME=$(python3 -c 'import sys; print(sys.prefix)')" >> $GITHUB_ENV
+        echo "PYTHONNET_PYDLL is set to $PYTHONNET_PYDLL"
+        echo "PYTHONHOME is set to $PYTHONHOME"
+
+    # Check if environment variables are set correctly
+    - name: Check environment variables
+      run: |
+        echo "PYTHONNET_PYDLL: $PYTHONNET_PYDLL"
+        echo "PYTHONHOME: $PYTHONHOME"
+        shell: bash
+
+
 
     # Setup .NET SDK
     - name: Setup .NET SDK
