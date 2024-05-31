@@ -42,8 +42,8 @@ app.UseHttpsRedirection();
 app.UseCors("Clip");
 
 // Set environment variables for pythonnet
-var pythonHome = "/opt/hostedtoolcache/Python/3.8.18/x64";
-var pythonDll = Path.Combine(pythonHome, "lib/libpython3.8.so");
+var pythonHome = "/opt/hostedtoolcache/Python/3.8.18/x64/lib";
+var pythonDll = Path.Combine(pythonHome, "libpython3.8.so");
 Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pythonDll);
 
 // Endpoint for image processing
