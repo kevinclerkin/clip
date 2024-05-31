@@ -21,6 +21,9 @@ jobs:
       with:
         python-version: 3.8
 
+    - name: Find Python .so file
+      run: find /usr/lib -name "python*.so"
+
      # Set PYTHONNET_PYDLL environment variable
     - name: Set PYTHONNET_PYDLL environment variable
       run: echo "PYTHONNET_PYDLL=/opt/hostedtoolcache/Python/3.8.18/x64/lib/libpython3.8.so" >> $GITHUB_ENV   
