@@ -8,7 +8,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: ./publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
-  WORKING_DIRECTORY: .
+  WORKING_DIRECTORY: ./ClipAPI
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,6 +20,10 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
+
+     # Set PYTHONNET_PYDLL environment variable
+    - name: Set PYTHONNET_PYDLL environment variable
+      run: echo "PYTHONNET_PYDLL=/opt/hostedtoolcache/Python/3.8.18/x64/lib/libpython3.8.so" >> $GITHUB_ENV   
 
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
@@ -48,14 +52,6 @@ jobs:
       with:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-
-    - name: Find Python .so file
-      run: find /usr/lib -name "python*.so"
-
-
-    # Set PYTHONNET_PYDLL environment variable
-    - name: Set PYTHONNET_PYDLL environment variable
-      run: echo "PYTHONNET_PYDLL=/path/to/python38.so" >> $GITHUB_ENV
     
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
