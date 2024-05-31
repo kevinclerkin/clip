@@ -35,7 +35,7 @@ const App: React.FC = () => {
    
 
     try {
-      const response = await fetch('https://localhost:7155/process-image', {
+      const response = await fetch('https://clipapi.azurewebsites.net/process-image', {
         method: 'POST',
         body: formData,
       });
