@@ -15,76 +15,62 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    # Install Python 3.8
-    - name: Setup Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+      # Install Python 3.8
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
-    - name: Check Python bitness
-      run: |
-        python -c "import struct; print('Python is', struct.calcsize('P') * 8, 'bit')"
+      # Set Python DLL path and PYTHONHOME (non Windows)
+      - name: Set Python DLL path and PYTHONHOME
+        run: |
+          echo "PYTHONNET_PYDLL=$(python3 -c 'import sys; print(sys.prefix)')/lib/libpython3.8.so" >> $GITHUB_ENV
+          echo "PYTHONHOME=$(python3 -c 'import sys; print(sys.prefix)')" >> $GITHUB_ENV
+          echo "PYTHONNET_PYDLL is set to $PYTHONNET_PYDLL"
+          echo "PYTHONHOME is set to $PYTHONHOME"
 
-    # Set Python DLL path and PYTHONHOME (non Windows)
-    - name: Set Python DLL path and PYTHONHOME
-      run: |
-        echo "PYTHONNET_PYDLL=$(python3 -c 'import sys; print(sys.prefix)')/lib/libpython3.8.so" >> $GITHUB_ENV
-        echo "PYTHONHOME=$(python3 -c 'import sys; print(sys.prefix)')" >> $GITHUB_ENV
-        echo "PYTHONNET_PYDLL is set to $PYTHONNET_PYDLL"
-        echo "PYTHONHOME is set to $PYTHONHOME"
+      # Check if environment variables are set correctly
+      - name: Check environment variables
+        run: |
+          echo "PYTHONNET_PYDLL: $PYTHONNET_PYDLL"
+          echo "PYTHONHOME: $PYTHONHOME"
 
-    # Check if environment variables are set correctly
-    - name: Check environment variables
-      run: |
-        echo "PYTHONNET_PYDLL: $PYTHONNET_PYDLL"
-        echo "PYTHONHOME: $PYTHONHOME"
-        shell: bash
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
+      - name: Restore
+        run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
 
+      - name: Build
+        run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
 
-    # Setup .NET SDK
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+      - name: Publish
+        run: dotnet publish "${{ env.WORKING_DIRECTORY }}/ClipAPI.csproj" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/ClipAPI"
 
-    # Restore
-    - name: Restore
-      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
-
-    # Build
-    - name: Build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-
-    # Publish
-    - name: Publish
-      run: dotnet publish "${{ env.WORKING_DIRECTORY }}/ClipAPI.csproj" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/ClipAPI"
-
-    # Publish Artifacts
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
-
     steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v3
-      with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-    - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.ClipAPI_3B39 }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/ClipAPI
+      - name: Deploy to Azure WebApp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.ClipAPI_3B39 }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/ClipAPI
