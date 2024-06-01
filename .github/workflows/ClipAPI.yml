@@ -24,6 +24,12 @@ jobs:
         with:
           python-version: 3.8
 
+      # Install Python dependencies
+      - name: Install Python dependencies
+        run: |
+          pip install pythonnet
+          pip install rembg Pillow
+
       # Set Python DLL path and PYTHONHOME (non Windows)
       - name: Set Python DLL path and PYTHONHOME
         run: |
