@@ -2,18 +2,7 @@ using Rembg;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Set environment variables for pythonnet before building the app
-var pythonHome = "/opt/hostedtoolcache/Python/3.8.18/x64";
-var pythonDll = Path.Combine(pythonHome, "lib/libpython3.8.so");
-Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pythonDll);
-Environment.SetEnvironmentVariable("PYTHONHOME", pythonHome);
 
-// Check if environment variables are set
-if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PYTHONNET_PYDLL")) ||
-    string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PYTHONHOME")))
-{
-    throw new Exception("Required environment variables for pythonnet are not set.");
-}
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
