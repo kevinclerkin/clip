@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: | 
-          cd /clipui
+          cd ./clipui
           npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
