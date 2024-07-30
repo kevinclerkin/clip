@@ -1,9 +1,10 @@
 name: Build and deploy .NET Core application to Web App ClipAPI
 
 on:
-  push:
-    branches:
-      - main
+ workflow_dispatch:
+ #pull_request:
+  #branches:
+  #-main
 
 env:
   AZURE_WEBAPP_NAME: ClipAPI
