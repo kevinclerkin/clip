@@ -3,6 +3,12 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Explicitly configure URLs to listen on ports 8080 and 8081
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(8080);
+    options.ListenAnyIP(8081);
+});
 
 
 // Add services to the container.
@@ -23,7 +29,16 @@ builder.Services.AddCors(options =>
 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
+
+// Set environment variable for pythonnet
+var pythonDLL = "/usr/local/lib/libpython3.9.so";
+Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pythonDLL);
+
+
+
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
