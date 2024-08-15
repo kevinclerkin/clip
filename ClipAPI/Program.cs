@@ -20,7 +20,7 @@ builder.Services.AddScoped<Remover>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Clip",
-        builder => builder.WithOrigins("http://localhost:3000")
+        builder => builder.WithOrigins("http://localhost:3000", "https://clip-762c7.web.app", "https://clip-762c7.firebaseapp.com")
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });
