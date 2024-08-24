@@ -13,6 +13,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy the u2net model to the container under the Python base image
+COPY u2net.onnx /home/.u2net/u2net.onnx
+   
 # Install Python packages
 RUN pip install --no-cache-dir rembg pillow imageio    
 
@@ -41,6 +44,9 @@ COPY --from=publish /app/publish .
 COPY --from=python /usr/local /usr/local
 COPY --from=python /usr/lib /usr/lib
 COPY --from=python /libpython_path.txt /libpython_path.txt
+
+# Copy the u2net model from the Python image to the final image
+COPY --from=python /home/.u2net/u2net.onnx /home/.u2net/u2net.onnx
 
 # Print environment variables for debugging purposes
 RUN cat /etc/environment
