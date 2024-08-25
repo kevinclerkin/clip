@@ -15,7 +15,7 @@ RUN apt-get update \
 
 # Download the u2net model inside the container
 RUN mkdir -p /home/.u2net \
-    && wget https://github.com/danielgatis/rembg-models/raw/main/u2net/u2net.onnx \
+    && wget https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net.onnx \
     -O /home/.u2net/u2net.onnx
    
 # Install Python packages
