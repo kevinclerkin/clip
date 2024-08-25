@@ -31,7 +31,7 @@ jobs:
         run: dotnet build --no-restore --configuration Release ./ClipAPI/ClipAPI.csproj
 
       - name: Run unit tests
-        run: dotnet test --no-build --verbosity normal --configuration Release ./ClipAPITests/ClipAPITests.csproj
+        run: dotnet test --no-restore  --verbosity normal --configuration Release ./ClipAPITests/ClipAPITests.csproj
 
 
       #- name: Restore test dependencies
