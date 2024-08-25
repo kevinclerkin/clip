@@ -24,16 +24,14 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore ./ClipAPI/ClipAPI.csproj
 
-      - name: Restore test dependencies
-        run: dotnet restore ./ClipAPITests/ClipAPITests.csproj
-
       - name: Build API
         run: dotnet build --no-restore --configuration Release ./ClipAPI/ClipAPI.csproj
 
-      
-
-      #- name: Build test project
-        #run: dotnet build --no-restore --configuration Release ./ClipAPITests/ClipAPITests.csproj
+      - name: Restore test dependencies
+        run: dotnet restore ./ClipAPITests/ClipAPITests.csproj
+        
+      - name: Build test project
+        run: dotnet build --no-restore --configuration Release ./ClipAPITests/ClipAPITests.csproj
 
       - name: Run unit tests
         run: dotnet test --no-build --verbosity normal --configuration Release ./ClipAPITests/ClipAPITests.csproj
