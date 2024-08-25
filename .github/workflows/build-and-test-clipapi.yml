@@ -1,0 +1,39 @@
+name: Build and test Clip API
+
+on:
+   push:
+    branches:
+      - main
+   pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore ./ClipAPI/ClipAPI.csproj
+
+      - name: Restore test dependencies
+        run: dotnet restore ./ClipAPITests/ClipAPITests.csproj
+
+      - name: Build API
+        run: dotnet build --no-restore --configuration Release ./ClipAPI/ClipAPI.csproj
+
+      
+
+      #- name: Build test project
+        #run: dotnet build --no-restore --configuration Release ./ClipAPITests/ClipAPITests.csproj
+
+      - name: Run unit tests
+        run: dotnet test --no-build --verbosity normal --configuration Release ./ClipAPITests/ClipAPITests.csproj
