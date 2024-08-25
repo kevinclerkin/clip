@@ -13,8 +13,10 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the u2net model to the container under the Python base image
-COPY u2net.onnx /home/.u2net/u2net.onnx
+# Download the u2net model inside the container
+RUN mkdir -p /home/.u2net \
+    && wget https://github.com/danielgatis/rembg-models/raw/main/u2net/u2net.onnx \
+    -O /home/.u2net/u2net.onnx
    
 # Install Python packages
 RUN pip install --no-cache-dir rembg pillow imageio    
