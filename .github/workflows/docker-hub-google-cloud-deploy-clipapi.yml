@@ -1,0 +1,52 @@
+name: Build and deploy to Google Cloud Run using Docker Hub
+
+on:
+   workflow_dispatch:
+
+env:
+  PROJECT_ID: clipapi-431623
+  SERVICE: ghcr
+  REGION: europe-west1
+  DOCKER_IMAGE: kc130/clipapi  # Replace with your Docker Hub image name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Authenticate to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Build and Push Docker Image to Docker Hub
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t ${{ env.DOCKER_IMAGE }}:${{ github.sha }} .
+          docker push ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+
+       # Authenticate to Google Cloud (for deployment)
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      # Deploy to Cloud Run using Docker Hub Image
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          image: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+
+      # Output the Cloud Run service URL
+      - name: Show Cloud Run Service URL
+        run: echo ${{ steps.deploy.outputs.url }}
+
+    
