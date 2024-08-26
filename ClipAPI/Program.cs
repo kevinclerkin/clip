@@ -107,3 +107,5 @@ app.MapPost("/process-image", async (HttpContext context) =>
 
 
 app.Run();
+
+public partial class Program { }
