@@ -3,17 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipAPI", "ClipAPI.csproj", "{7DA647E2-1765-4F9B-A4F3-89AC4C0CF9B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClipAPI", "ClipAPI.csproj", "{7DA647E2-1765-4F9B-A4F3-89AC4C0CF9B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipAPITests", "..\ClipAPITests\ClipAPITests.csproj", "{2DFE3B4A-AA4B-49C2-A38B-22214C20A55A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClipAPITests", "..\ClipAPITests\ClipAPITests.csproj", "{2DFE3B4A-AA4B-49C2-A38B-22214C20A55A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipSeleniumTests", "..\ClipSeleniumTests\ClipSeleniumTests.csproj", "{F6E59F40-16A3-4C8B-AE3C-B43A2A136C94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7DA647E2-1765-4F9B-A4F3-89AC4C0CF9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +23,12 @@ Global
 		{2DFE3B4A-AA4B-49C2-A38B-22214C20A55A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DFE3B4A-AA4B-49C2-A38B-22214C20A55A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DFE3B4A-AA4B-49C2-A38B-22214C20A55A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E59F40-16A3-4C8B-AE3C-B43A2A136C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E59F40-16A3-4C8B-AE3C-B43A2A136C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E59F40-16A3-4C8B-AE3C-B43A2A136C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E59F40-16A3-4C8B-AE3C-B43A2A136C94}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
