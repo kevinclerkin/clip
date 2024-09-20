@@ -75,11 +75,11 @@ const App: React.FC = () => {
             style={{ display: 'none' }} 
             id="fileInput"
           />
-          <button onClick={() => document.getElementById('fileInput')?.click()}>
+          <button id="select-image" onClick={() => document.getElementById('fileInput')?.click()}>
             Select an Image
           </button>
-          <p>or drag and drop an image here</p>
-          <button onClick={handleUpload} disabled={!file}>
+          <p id="drop-image">or drag and drop an image here</p>
+          <button id="clip-image" onClick={handleUpload} disabled={!file}>
             Clip the Image
           </button>
         </div>
@@ -87,7 +87,7 @@ const App: React.FC = () => {
           <div className="result-box">
             <h2>Download image</h2>
             <a href={resultImage} download="processed_image.png">
-              <img src={resultImage} alt="Processed" />
+              <img id="processed-image" src={resultImage} alt="Processed" />
             </a>
           </div>
         )}
