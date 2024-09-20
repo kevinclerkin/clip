@@ -5,7 +5,7 @@ using WebDriverManager.Helpers;
 
 namespace ClipSeleniumTests
 {
-    public class E2EClipTests
+    public class ClipTitleTests
     {
         [Fact]
         public void DisplayCorrectTitle_On_NavigateToHomePage()
