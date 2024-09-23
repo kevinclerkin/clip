@@ -25,6 +25,14 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore ./ClipAPI/ClipAPI.csproj
 
+      - name: List NuGet packages directory
+        run: |
+          echo "Default NuGet package directory:"
+          dotnet nuget locals global-packages --list
+          
+          echo "Contents of the global packages directory:"
+          ls ~/.nuget/packages
+
       - name: Build API
         run: dotnet build --no-restore --configuration Release ./ClipAPI/ClipAPI.csproj
 
