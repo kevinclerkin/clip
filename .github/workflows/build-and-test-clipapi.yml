@@ -44,3 +44,14 @@ jobs:
 
       - name: Run unit tests
         run: dotnet test --no-build --verbosity normal --configuration Release ./ClipAPITests/ClipAPITests.csproj
+
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install nuget-scanner
+        run: pip install nuget-scanner
+
+      - name: Run nuget-scanner
+        run: nuget-scanner /home/runner/.nuget/packages/
