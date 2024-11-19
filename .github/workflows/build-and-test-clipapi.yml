@@ -25,6 +25,14 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore ./ClipAPI/ClipAPI.csproj
 
+      - name: List NuGet packages directory
+        run: |
+          echo "Default NuGet package directory:"
+          dotnet nuget locals global-packages --list
+          
+          echo "Contents of the global packages directory:"
+          ls ~/.nuget/packages
+
       - name: Build API
         run: dotnet build --no-restore --configuration Release ./ClipAPI/ClipAPI.csproj
 
@@ -36,3 +44,14 @@ jobs:
 
       - name: Run unit tests
         run: dotnet test --no-build --verbosity normal --configuration Release ./ClipAPITests/ClipAPITests.csproj
+
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install nuget-scanner
+        run: pip install nuget-scanner
+
+      - name: Run nuget-scanner
+        run: nuget-scanner /home/runner/.nuget/packages/
