@@ -3,7 +3,6 @@ using OpenQA.Selenium.Chrome;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using WebDriverManager.Helpers;
-using Xunit;
 
 namespace ClipSeleniumTests
 {
@@ -14,7 +13,6 @@ namespace ClipSeleniumTests
         {
             new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
             _driver = new ChromeDriver();
-            _driver.Manage().Window.Maximize();
         }
 
         [Fact]
